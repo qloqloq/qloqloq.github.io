@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding REST APIs</title>
+    <style>
+        body {
+          font-family: monospace;
+          background-color: #f4f4f4;
+          color: #111;
+          max-width: 720px;
+          margin: 2rem auto;
+          padding: 1rem;
+          border: 2px dashed #444;
+          background: repeating-linear-gradient(
+            0deg,
+            #fefefe,
+            #fefefe 30px,
+            #eaeaea 30px,
+            #eaeaea 31px
+          );
+        }
+        h1, h2, h3 {
+          border-bottom: 1px solid #888;
+          padding-bottom: 0.2rem;
+        }
+        a {
+          color: #0645ad;
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .date {
+          color: #666;
+          font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<h1>~/retro-tech-blog</h1>
+<h2>Understanding REST APIs</h2>
+<div class="date">2025-07-01</div>
+<p>
+    REST (Representational State Transfer) is an architectural style used for designing networked applications. It relies on stateless communication and standard HTTP methods like <code>GET</code>, <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>.
+</p>
+<h3>Why REST?</h3>
+<p>
+    REST is simple, scalable, and based on existing web standards. It is language agnostic and works seamlessly with HTTP, which makes it ideal for web APIs.
+</p>
+<h3>Core Concepts</h3>
+<ul>
+    <li><strong>Resources:</strong> Represented by URIs. Example: <code>/users/123</code></li>
+    <li><strong>HTTP Methods:</strong>
+        <ul>
+            <li><code>GET</code> – Retrieve a resource</li>
+            <li><code>POST</code> – Create a new resource</li>
+            <li><code>PUT</code> – Update an existing resource</li>
+            <li><code>DELETE</code> – Remove a resource</li>
+        </ul>
+    </li>
+    <li><strong>Stateless:</strong> Each request must contain all information needed to complete it.</li>
+</ul>
+<h3>Example</h3>
+<pre><code>GET /api/articles/42
+Host: example.com
+
+Response:
+{
+  "id": 42,
+  "title": "Understanding REST APIs",
+  "author": "you"
+}
+</code></pre>
+<h3>Conclusion</h3>
+<p>
+    REST APIs power most of the modern web. Their simplicity and scalability make them a great choice for building distributed systems.
+</p>
+
+<footer>
+    <hr>
+    <p>Built with ❤️ using HTML/CSS. Source code on <a href="https://github.com/yourusername/yourusername.github.io">GitHub</a>.</p>
+</footer>
+</body>
+</html>
