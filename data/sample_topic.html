@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Understanding REST APIs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
           font-family: monospace;
@@ -20,25 +21,65 @@
             #eaeaea 30px,
             #eaeaea 31px
           );
+          position: relative;
         }
+
         h1, h2, h3 {
           border-bottom: 1px solid #888;
           padding-bottom: 0.2rem;
         }
+
         a {
           color: #0645ad;
           text-decoration: none;
         }
+
         a:hover {
           text-decoration: underline;
         }
+
         .date {
           color: #666;
           font-size: 0.9rem;
         }
+
+        /* Retro Side Back Button */
+        .side-back-button {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          z-index: 999;
+          font-family: 'Press Start 2P', cursive;
+          background-color: #444;
+          color: #00ffe1;
+          border: 4px double #00ffe1;
+          padding: 10px 18px;
+          font-size: 10px;
+          text-transform: uppercase;
+          text-decoration: none;
+          box-shadow: 0 0 8px #00ffe1, 0 0 16px #ff0080 inset;
+          transition: all 0.2s ease-in-out;
+        }
+
+        .side-back-button:hover {
+          background-color: #00ffe1;
+          color: #ff0080;
+          box-shadow: 0 0 8px #ff0080, 0 0 16px #00ffe1 inset;
+        }
+
+        /* Prevent content from overlapping fixed button */
+        @media (max-width: 600px) {
+          .side-back-button {
+            font-size: 8px;
+            padding: 8px 12px;
+          }
+        }
     </style>
 </head>
 <body>
+
+<a href="javascript:history.back()" class="side-back-button">← Back</a>
+
 <h1>~/retro-tech-blog</h1>
 <h2>Understanding REST APIs</h2>
 <div class="date">2025-07-01</div>
