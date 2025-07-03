@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Writing my own database</title>
+    <title>Make Your Own [Tool]</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
           rel="stylesheet"/>
     <style>
@@ -169,9 +169,11 @@
     Back</a>
 
 <!-- Theme Toggle Button -->
-<button id="themeToggleBtn" class="theme-toggle-button" aria-label="Toggle theme">
+<button id="themeToggleBtn" class="theme-toggle-button"
+        aria-label="Toggle theme">
     <!-- Sun and Moon icons -->
-    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+         aria-hidden="true">
         <circle cx="12" cy="12" r="5"/>
         <g stroke="currentColor" stroke-width="2">
             <line x1="12" y1="1" x2="12" y2="3"/>
@@ -184,61 +186,116 @@
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </g>
     </svg>
-    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 24 24" aria-hidden="true">
         <path d="M21 12.79A9 9 0 0 1 12.21 3 7 7 0 1 0 21 12.79z"/>
     </svg>
 </button>
 
 <h1>~/tech-notes/myos/database</h1>
-<h2>Writing my own database from scratch</h2>
+<h2>Writing my own <b>database</b></h2>
 <div class="date">[02-07-2025]</div>
 <p>
-    This is first post from <b>Make Your Own Software</b> series, where I will be <i>reinventing the wheel</i> by writing my own version of common software tools for learning purposes. <br>
+    This is first post from <b>Make Your Own Software</b> series, where I will
+    be <i>reinventing the wheel</i> by writing my own version of common software
+    tools for learning purposes. <br>
     In this lecture I will be focusing on our beloved relational databases. <br>
-    I will try to keep the order by grouping series in their own sections, so every article from <b>Make Your Own Software</b> series, (if) I will (ever) write any, can be found <a href="../make-my-own.html">here</a>
-    
-  <code>with code snippets if needed</code>
+    I will try to keep the order by grouping series in their own sections, so
+    every article from <b>Make Your Own Software</b> series, (if) I will (ever)
+    write any, can be found <a href="../make-my-own.html">here</a>
 </p>
-<h3>FIRST PARAGRAPH</h3>
-<p>
-    PARAGRAPH'S TEXT
-</p>
-<h3>SECOND PARAGRAPH</h3>
-<ul>
-    <li><strong>Resources:</strong> Represented by URIs. Example: <code>/users/123</code>
-    </li>
-    <li><strong>HTTP Methods:</strong>
-        <ul>
-            <li><code>GET</code> – Retrieve a resource</li>
-            <li><code>POST</code> – Create a new resource</li>
-            <li><code>PUT</code> – Update an existing resource</li>
-            <li><code>DELETE</code> – Remove a resource</li>
-        </ul>
-    </li>
-    <li><strong>Stateless:</strong> Each request must contain all information
-        needed to complete it.
-    </li>
-</ul>
-<h3>CODE EXAMPLES PARGRAPH</h3>
-<pre><code>GET /api/articles/42
-Host: example.com
 
-Response:
-{
-  "id": 42,
-  "title": "Understanding REST APIs",
-  "author": "you"
-}
-</code></pre>
-<h3>CONCLUSION PARAGRAPH</h3>
-<p>
-    PARAGRAPH'S TEXT
-</p>
+<div class="phase">
+    <h3>Phase 1: Research</h3>
+    <div class="question">🔹What similar tools exist?</div>
+    <div style="padding-left: 2em;" class="answer"> - <a
+            href="https://github.com/sqlite/sqlite">SQLite</a>
+        database engine
+    </div>
+
+    <div class="question">🔹What key concepts or jargon do I not understand?
+    </div>
+    <div style="padding-left: 2em;" style="padding-left: 2em;"
+         class="answer"></div>
+
+    <div class="question">🔹What makes those tools "good" or "bad"?</div>
+    <div style="padding-left: 2em;" style="padding-left: 2em;"
+         class="answer"></div>
+
+    <div class="question">🔹Read:</div>
+    <div class="answer">
+        <a style="padding-left: 2em;"
+           href="https://stackoverflow.com/questions/1052189/how-to-write-a-simple-database-engine">
+            <b>Stackoverflow</b>: How to write a simple database engine [closed]</a>
+        <br>
+        <a style="padding-left: 2em;"
+           href="https://www.codeproject.com/Articles/7410/Implementation-of-a-B-Tree-Database-Class">
+            Implementation of a B-Tree Database Class</a> <br>
+        <a style="padding-left: 2em;"
+           href="https://learn.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/bb510424(v=sql.105)?redirectedfrom=MSDN">
+            Designing and Implementing Structured Storage (Database Engine)</a>
+        <br>
+    </div>
+    <div class="question">🔹Analyze source code of <a
+            href="https://github.com/sqlite/sqlite">SQLite</a>
+    </div>
+</div>
+
+<div class="phase">
+    <h3>Phase 2: Learn the Fundamentals</h3>
+    <div class="question">🔹What do I need to learn first?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹Resources I found useful:</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
+
+<div class="phase">
+    <h3>Phase 3: Naive Implementation</h3>
+    <div class="question">🔹What’s the simplest version I can build?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹What assumptions am I making?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹Demo or output:</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
+
+<div class="phase">
+    <h3>Phase 4: Iteration & Improvement</h3>
+    <div class="question">🔹What didn’t work as expected?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹What features did I add?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
+
+<div class="phase">
+    <h3>Phase 5: Debugging & Testing</h3>
+    <div class="question">🔹What bugs did I hit?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹How did I test it?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
+
+<div class="phase">
+    <h3>Phase 6: Final Thoughts</h3>
+    <div class="question">🔹What did I learn?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹What would I change next time?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹What’s next?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
 
 <footer>
     <hr/>
-    <p>Built with ❤️ using HTML/CSS. Source code on <a
-            href="https://github.com/qloqloq/qloqloq.github.io">GitHub</a>.</p>
+    <p>Find all my <b>Make Your Own Software</b> articles <a
+            href="../myos.html">here</a>
 </footer>
 
 <script>
@@ -261,7 +318,6 @@ Response:
       updateIcons();
     });
 
-    // Initialize icons on page load
     updateIcons();
 </script>
 
