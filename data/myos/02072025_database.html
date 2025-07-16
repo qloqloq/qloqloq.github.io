@@ -176,6 +176,12 @@
             display: block;
             word-wrap: break-word;
         }
+
+        img {
+            max-width: 90%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
     </style>
 </head>
 <body>
@@ -324,6 +330,41 @@
 
 
     </div>
+</div>
+
+<div class="phase">
+    <h3>Phase 2a: What we need? Key components/building blocks</h3>
+    🔹I will be using SQLite as an example. Description of key components can be found under <a href="https://www.sqlite.org/arch.html">original SQLite documentation link</a>,
+    but basically what we need is:<br>
+    <ul>
+        <li><b>REPL</b> (Read-Eval-Print Loop) - an interface for communicating with the database</li>
+        <li><b>Tokenizer</b> - breaks the SQL text into tokens and hands them to parser</li>
+        <li><b>Parser</b> - assigns meaning to tokens based on their context</li>
+        <li><b>Code Generator</b> - analyze parser's tokens tree and generates bytecode that performs the work of the SQL statement</li>
+        <li><b>Bytecode Engine/Generated code interpreter</b> - a virtual machine that runs generated code</li>
+        <li><b>B-Tree</b> - data structure to store any data on disk</li>
+        <li><b>Page Cache/Pager</b> - in mem caching responsible for reading, writing and caching pages (B-Tree requests data from the disk in fixed-sized pages).</li>
+        <li><b>OS Interface</b> - an abstraction over underlying OS for working on system files, needed for cross system portability</li>
+        <li><b>Utilities</b> - symbol tables used by the parser</li>
+    </ul>
+</div>
+
+<div class="phase">
+    <h3>Phase 2b: Why we need? Key components/building blocks</h3>
+    🔹I will be using SQLite as an example. Description of key components can be found under <a href="https://www.sqlite.org/arch.html">original SQLite documentation link</a>,
+    but basically what we need is:<br>
+    <ul>
+        <li><b>REPL</b> (Read-Eval-Print Loop) - an interface for communicating with the database</li>
+        <li><b>Tokenizer</b> - breaks the SQL text into tokens and hands them to parser</li>
+        <li><b>Parser</b> - assigns meaning to tokens based on their context</li>
+        <li><b>Code Generator</b> - analyze parser's tokens tree and generates bytecode that performs the work of the SQL statement</li>
+        <li><b>Bytecode Engine/Generated code interpreter</b> - a virtual machine that runs generated code</li>
+        <li><b>B-Tree</b> - data structure to store any data on disk</li>
+        <li><b>Page Cache/Pager</b> - in mem caching responsible for reading, writing and caching pages (B-Tree requests data from the disk in fixed-sized pages).</li>
+        <li><b>OS Interface</b> - an abstraction over underlying OS for working on system files, needed for cross system portability</li>
+        <li><b>Utilities</b> - symbol tables used by the parser</li>
+    </ul>
+    <img src="../../images/myos/db_key_architecture.png" alt="Nothing to see here GIF">
 </div>
 
 <div class="phase">
