@@ -160,6 +160,22 @@
         .icon-sun.active, .icon-moon.active {
           display: block;
         }
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-left: 3px solid #f36d33;
+            color: #666;
+            page-break-inside: avoid;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1;
+            margin-bottom: 1em;
+            max-width: 100%;
+            overflow: auto;
+            padding: 1em 1.5em;
+            display: block;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
@@ -247,6 +263,66 @@
             - Let's Build a Simple Database - Writing a sqlite clone from
             scratch in C</a>
         <br>
+    </div>
+    <div class="phase">
+        <h3>Phase 1b: More Research</h3>
+        <b style="padding-left: 2em;">How does database store my data on
+            disk?</b><br>
+        For this I'll be using <a
+            href="https://www.postgresql.org/">PostgreSQL</a>
+        as an example. <br>
+        I'll mostly rely on <a href="https://www.interdb.jp/pg/">The Internals of PostgreSQL</a> as a reference.<br>
+        Your data is basically stored as a set of files you disk.
+        Postgres groups any data related to a database in its own directory
+        (one dir per database). <br>
+        To get location where Postgres stores all your data, you can run <code>show
+        data_directory;</code> inside your pgsql CLI, which should output
+        something
+        like:
+        <code>testdb=# show data_directory;<br>
+            data_directory<br>
+            -----------------------------<br>
+            <b>/var/lib/postgresql/14/main</b><br>
+            (1 row)
+        </code>
+        All cluster's data is held under /base folder. <br>
+        To get data only from your database you need to obtain ID of your
+        database object first, and then search it under /base. <br>
+        To get ID of your database run: <br>
+        <code>
+            SELECT oid as object_id, datname as database_name FROM pg_database;
+        </code>
+        which will output something like:<br>
+        <code>
+            object_id | database_name<br>
+            -----------+---------------<br>
+            13921 | postgres<br>
+            <b>16396 | testdb</b><br>
+            1 | template1<br>
+            13920 | template0<br>
+            (4 rows)
+        </code>
+        Now let's see what files are under /base/16396: (this is just subset of files)
+        <code>
+            postgres@pop-os:~/14/main/base/16396$ ls -l<br>
+            total 8796<br>
+            -rw------- 1 postgres postgres   <b>8192</b> Jul  5 11:51 112<br>
+            -rw------- 1 postgres postgres   <b>8192</b> Jul  5 11:51 113<br>
+            -rw------- 1 postgres postgres <b>122880</b> Jul  5 11:56 1247<br>
+            -rw------- 1 postgres postgres  <b>24576</b> Jul  5 11:51 1247_fsm<br>
+            -rw------- 1 postgres postgres   <b>8192</b> Jul  5 11:51 1247_vm<br>
+            -rw------- 1 postgres postgres <b>450560</b> Jul  5 11:56 1249<br>
+            -rw------- 1 postgres postgres  <b>24576</b> Jul  5 11:51 1249_fsm<br>
+            -rw------- 1 postgres postgres   <b>8192</b> Jul  5 11:51 1249_vm<br>
+            -rw------- 1 postgres postgres      0 Jul  5 11:51 13742<br>
+            -rw------- 1 postgres postgres    512 Jul  5 11:51 pg_filenode.map<br>
+            -rw------- 1 postgres postgres 155936 Jul  5 11:51 pg_internal.init<br>
+            -rw------- 1 postgres postgres      3 Jul  5 11:51 PG_VERSION
+        </code>
+        What is worth noticing is the size of each of the data files divisible by 8K (8192).
+        The reason for that is by default PostgreSQL keeps data as a 8K blocks (pages).
+
+
     </div>
 </div>
 
