@@ -285,7 +285,8 @@
         To get location where Postgres stores all your data <a
             href="https://www.postgresql.fastware.com/blog/where-and-how-does-postgresql-actually-store-data-on-disk">visit
         this link</a>, or you can run:
-        <code>show data_directory;</code> inside your pgsql CLI, which should output
+        <code>show data_directory;</code> inside your pgsql CLI, which should
+        output
         something
         like:
         <code>testdb=# show data_directory;<br>
@@ -423,14 +424,23 @@
 
 <div class="phase">
     <h3>Phase 3: Naive Implementation</h3>
-    <div class="question">🔹What’s the simplest version I can build?</div>
-    <div style="padding-left: 2 em;" class="answer"></div>
-
-    <div class="question">🔹What assumptions am I making?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
-
-    <div class="question">🔹Demo or output:</div>
-    <div style="padding-left: 2em;" class="answer"></div>
+    <div style="padding-left: 2 em;" class="answer">For naive implementation I
+        will use hardcoded, single table with
+        predefined structure.
+        For persistent data storage, I'll be using system files holding my byte
+        representation of data splitted in 4K bytes chunks of data (called
+        Pages). <br>
+        <b>Assumptions:</b> <br>
+        🔹data represented in unsigned bytes (>=0)<br>
+        🔹data atomically fit into a single page (if it doesn't fit, go to next
+        page)<br>
+        🔹pages can be heavier than predefined page size (4k bytes)<br>
+        Once application is stopped, on application re-run we want to be able to
+        keep inserting rows with right offset. To achieve that I'll create table
+        with metadata about my main table, which will keep track of number data
+        pages, current page index, current row byt offset (last row starting
+        bytes index), row bytes length.
+    </div>
 </div>
 
 <div class="phase">
