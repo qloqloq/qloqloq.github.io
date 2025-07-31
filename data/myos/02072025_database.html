@@ -479,6 +479,29 @@
             href="../myos.html">here</a>
 </footer>
 
+<div class="phase">
+    <h3>*Appendix: Useful commands*</h3>
+    <div class="question">🔹PostgreSQL:</div>
+    <div style="padding-left: 2em;" class="answer">
+        Get OID of your table:
+        <code>SELECT 'your-table'::regclass::oid;</code><br>
+        Get physical location of each element in table:
+        <code>SELECT ctid, * FROM my_table;</code>
+    </div>
+
+    <div class="question">🔹What would I change next time?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+
+    <div class="question">🔹What’s next?</div>
+    <div style="padding-left: 2em;" class="answer"></div>
+</div>
+
+<footer>
+    <hr/>
+    <p>Find all my <b>Make Your Own Software</b> articles <a
+            href="../myos.html">here</a>
+</footer>
+
 <script>
     const btn = document.getElementById('themeToggleBtn');
     const iconSun = btn.querySelector('.icon-sun');
