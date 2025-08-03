@@ -160,7 +160,7 @@
         .icon-sun.active, .icon-moon.active {
           display: block;
         }
-        code {
+        snippet {
             background: #f4f4f4;
             border: 1px solid #ddd;
             border-left: 3px solid #f36d33;
@@ -175,8 +175,18 @@
             padding: 1em 1.5em;
             display: block;
             word-wrap: break-word;
+            white-space: pre-wrap; /* <-- Add this line to preserve line breaks */
         }
-
+        code {
+          font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+          background-color: rgba(27, 31, 35, 0.05); /* subtle light background */
+          padding: 0.2em 0.4em;
+          margin: 0;
+          font-size: 85%;
+          border-radius: 4px;
+          color: #e83e8c; /* pinkish to stand out */
+          white-space: break-spaces;
+        }
         img {
             max-width: 90%;
             height: auto;
@@ -285,25 +295,25 @@
         To get location where Postgres stores all your data <a
             href="https://www.postgresql.fastware.com/blog/where-and-how-does-postgresql-actually-store-data-on-disk">visit
         this link</a>, or you can run:
-        <code>show data_directory;</code> inside your pgsql CLI, which should
+        <snippet>show data_directory;</snippet> inside your pgsql CLI, which should
         output
         something
         like:
-        <code>testdb=# show data_directory;<br>
+        <snippet>testdb=# show data_directory;<br>
             data_directory<br>
             -----------------------------<br>
             <b>/var/lib/postgresql/14/main</b><br>
             (1 row)
-        </code>
+        </snippet>
         All cluster's data is held under /base folder. <br>
         To get data only from your database you need to obtain ID of your
         database object first, and then search it under /base. <br>
         To get ID of your database run: <br>
-        <code>
+        <snippet>
             SELECT oid as object_id, datname as database_name FROM pg_database;
-        </code>
+        </snippet>
         which will output something like:<br>
-        <code>
+        <snippet>
             object_id | database_name<br>
             -----------+---------------<br>
             13921 | postgres<br>
@@ -311,10 +321,10 @@
             1 | template1<br>
             13920 | template0<br>
             (4 rows)
-        </code>
+        </snippet>
         Now let's see what files are under /base/16396: (this is just subset of
         files)
-        <code>
+        <snippet>
             postgres@pop-os:~/14/main/base/16396$ ls -l<br>
             total 8796<br>
             -rw------- 1 postgres postgres <b>8192</b> Jul 5 11:51 112<br>
@@ -330,7 +340,7 @@
             -rw------- 1 postgres postgres 155936 Jul 5 11:51
             pg_internal.init<br>
             -rw------- 1 postgres postgres 3 Jul 5 11:51 PG_VERSION
-        </code>
+        </snippet>
         What is worth noticing is the size of each of the data files divisible
         by 8K (8192).
         The reason for that is by default PostgreSQL keeps data as a 8K blocks
@@ -409,17 +419,93 @@
 
 <div class="phase">
     <h3>Phase 2: Learn the Fundamentals</h3>
-    <div class="question">🔹How the data is stored internally?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
-
-    <div class="question">🔹How the data is queried?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
-
-    <div class="question">🔹How the data is updated?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
-
-    <div class="question">🔹How the data is deleted?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
+    <div>
+        <h4>Page</h4>
+        <div>
+            Postgres keeps table data in an array of fixed sized (usually 8kB)
+            system
+            files called pages. All pages are logically equivalent, meaning any
+            item
+            of
+            a table can be stored in any of the pages.
+        </div>
+        <br>
+        <div>
+            <div class="question">🔹What is the layout the Page file?</div>
+            <div style="padding-left: 2em;" class="answer">
+                It consists of sections like page headers, array of item IDs,
+                free
+                space, items and (optionally) special space. <br>
+                <img src="../../images/myos/db_page_layout.png"
+                     alt="Page layout">
+                <ol>
+                    <li>Page Header - stores metadata about the page (e.g. LSN,
+                        checksum, flags).
+                    </li>
+                    <li>ItemIdData - an array that tells where each item (i.e.
+                        pair
+                        (offset, length) entries, 4 bytes per item) is on the
+                        page,
+                    </li>
+                    <li>Free Space - unallocated space. New item IDs are
+                        allocated
+                        from
+                        the start of this area, new items from the end
+                    </li>
+                    <li>Items - actual row data.</li>
+                    <li>Special Space (optional) - used by special-purpose
+                        indexes
+                        like
+                        GiST.
+                    </li>
+                </ol>
+            </div>
+            To inspect page layout, you need to create extension pageinspect:
+            <snippet>CREATE EXTENSION pageinspect;</snippet>
+            and then run:
+            <snippet>SELECT * FROM heap_page_items(get_raw_page('my_table',
+                0));</snippet>
+            which will output something like:
+            <img src="../../images/myos/db_pageinspect.png"
+                 alt="Pageinspect">
+        </div>
+        <div>
+            <div class="question">🔹Where is the schema of my table stored?</div>
+            <div style="padding-left: 2em;" class="answer">Postgres stores
+                metadata bout tables (including schema, columns, data types,
+                indexes, etc) in a set ot system catalogs (special system
+                tables). <br>
+                <b>Key catalogs</b>
+                <ul>
+                    <li><code>pg_class</code>: one row per table, index, sequence, etc.</li>
+                    <li><code>pg_attribute</code>: one row per column.</li>
+                    <li><code>pg_type</code>: data type information</li>
+                    <li><code>pg_namespace</code>: stores schema (like public, etc)</li>
+                    <li><code>pg_constraint</code>: constraints like PK, FK</li>
+                    <li><code>pg_index</code>: index definitions</li>
+                </ul>
+                You can query them like:
+                <snippet>-- Get table columns
+SELECT attname, atttypid::regtype, attnotnull
+FROM pg_attribute
+WHERE attrelid = 'my_table'::regclass AND attnum > 0 AND NOT attisdropped;</snippet>
+                <img src="../../images/myos/db_get_table_columns.png"
+                     alt="Table columns">
+                <snippet>-- Get schema of a table
+SELECT n.nspname AS schema_name
+FROM pg_class c
+JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE c.relname = 'my_table';</snippet>
+                <img src="../../images/myos/db_get_table_schema.png"
+                     alt="Table schema"> <br>
+                Or simply use:
+                <snippet>\d my_table;</snippet>
+                <img src="../../images/myos/db_describe_table.png"
+                     alt="Describe table">
+            </div>
+        </div>
+    </div>
+    <br>
 </div>
 
 <div class="phase">
@@ -484,15 +570,15 @@
     <div class="question">🔹PostgreSQL:</div>
     <div style="padding-left: 2em;" class="answer">
         Get OID of your table:
-        <code>SELECT 'your-table'::regclass::oid;</code>
+        <snippet>SELECT 'your-table'::regclass::oid;</snippet>
         Get physical location of each element in table:
-        <code>SELECT ctid, * FROM my_table;</code>
+        <snippet>SELECT ctid, * FROM my_table;</snippet>
     </div>
     <div style="padding-left: 2em;" class="answer">
         Inspect page contents using PostgreSQL extensions like:
-        <code>CREATE EXTENSION pageinspect;</code>
+        <snippet>CREATE EXTENSION pageinspect;</snippet>
         And then:
-        <code>SELECT * FROM heap_page_items(get_raw_page('my_table', 0));</code>
+        <snippet>SELECT * FROM heap_page_items(get_raw_page('my_table', 0));</snippet>
     </div>
 </div>
 
