@@ -484,16 +484,16 @@
     <div class="question">🔹PostgreSQL:</div>
     <div style="padding-left: 2em;" class="answer">
         Get OID of your table:
-        <code>SELECT 'your-table'::regclass::oid;</code><br>
+        <code>SELECT 'your-table'::regclass::oid;</code>
         Get physical location of each element in table:
         <code>SELECT ctid, * FROM my_table;</code>
     </div>
-
-    <div class="question">🔹What would I change next time?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
-
-    <div class="question">🔹What’s next?</div>
-    <div style="padding-left: 2em;" class="answer"></div>
+    <div style="padding-left: 2em;" class="answer">
+        Inspect page contents using PostgreSQL extensions like:
+        <code>CREATE EXTENSION pageinspect;</code>
+        And then:
+        <code>SELECT * FROM heap_page_items(get_raw_page('my_table', 0));</code>
+    </div>
 </div>
 
 <footer>
