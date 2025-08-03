@@ -501,7 +501,13 @@ WHERE c.relname = 'my_table';</snippet>
                 Or simply use:
                 <snippet>\d my_table;</snippet>
                 <img src="../../images/myos/db_describe_table.png"
-                     alt="Describe table">
+                     alt="Describe table"><br><br>
+                Notice how free spaces decreases whenever we insert new data into our table:
+                <img src="../../images/myos/db_free_space_changes_after_inserts.png"
+                     alt="Free space after inserts"><br>
+                Both <code>lower</code> and <code>upper</code> changes,
+                because not only new item is added from the end of free space,
+                but also its ID at the beginning of free space (fixed size +4KB).
             </div>
         </div>
     </div>
